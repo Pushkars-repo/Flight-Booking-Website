@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+    <div class="max-w-6xl mx-auto flex flex-wrap items-start py-6 px-6 xl:px-0">
+        <div class="products w-full lg:w-3/4">
+            <h1 class="mb-5 text-3xl">Booking Details</h1>
+
+            <div class="w-full pr-6">
+                <div class="mb-6 p-6 bg-gray-100 rounded-xl">
+                    <h2 class="mb-5 uppercase text-lg border-b-2 border-gray-400">Ticket Details</h2>
+
+                    <div class="flex justify-around space-x-6">
+                        <div>
+                            <h2 class="mb-5 uppercase text-lg">Airline Name</h2>
+                            <h1 class="text-lg font-bold">{{booked_flight.airline}}</h1>
+                            <p class="text-sm font-semibold">{{booked_flight.plane}}</p>
+                        </div>
+                        <div>
+                            <h2 class="mb-5 uppercase text-lg">Origin Place</h2>
+                            <h1 class="text-lg font-bold">{{booked_flight.depart_time}}</h1>
+                            <p class="text-md font-semibold">{{booked_flight.origin_airport}}, <br> {{booked_flight.origin}}
+                            </p>
+                        </div>
+                        <div>
+                            <h2 class="mb-5 uppercase text-lg">Destination</h2>
+                            <h1 class="text-lg font-bold">{{booked_flight.arrival_time}}</h1>
+                            <p class="text-md font-semibold">{{booked_flight.destination_airport}}, <br>
+                                {{booked_flight.destination}}</p>
+                        </div>
+
+                        <div>
+                            <h2 class="mb-5 uppercase text-lg">Total Fare</h2>
+                            <h1 class="text-lg font-semibold">Rs. {{booked_flight.fare}}</h1>
+                        </div>
+                        
+
+                    </div>
+
+
+
+
+                </div>
+                <form method="post" action="{% url 'confirm_tkt' booked_flight.id %}" class="mb-6 p-6 bg-gray-100 rounded-xl">
+                    {% csrf_token %}
+                    <h2 class="mb-5 uppercase text-lg border-b-2 border-gray-400">Passenger Details</h2>
+
+                    <div class="flex space-x-6">
+                        <div class="w-1/2 mb-4">
+                            <label for="" class="inline-block mb-2">First Name</label>
+                            <input type="text" class="w-full p-2 rounded-xl" name="fname" required>
+                        </div>
+                        <div class="w-1/2 mb-4">
+                            <label for="" class="inline-block mb-2">Last Name</label>
+                            <input type="text" class="w-full p-2 rounded-xl" name="lname" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="inline-block mb-2">Email</label>
+                        <input type="email" class="w-full p-2 rounded-xl" name="email" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="" class="inline-block mb-2">Phone</label>
+                        <input type="phone" class="w-full p-2 rounded-xl" name="phone" required>
+                    </div>
+
+                    <button type="submit required" href=""
+                        class="inline-block px-8 py-4 rounded-xl bg-[#FC6736] hover:bg-gray-200 hover:text-[#FC6736] text-gray-200 ">Book
+                        Ticket(s)</button>
+
+                </form>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</body>
+
+</html>

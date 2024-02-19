@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardTrip</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="w-full h-screen"
+        style="background-image:linear-gradient(rgba(7, 7, 7, 0.775), rgba(7, 7, 7, 0.775)), url(/static/images/bg.jpg)">
+        <!-- navbar starts -->
+        <div class="px-8">
+            <nav class=" w-full h-20 rounded-lg flex justify-between items-center">
+                <a href="" class="text-gray-200 font-extrabold text-4xl px-4">BoardTrip</a>
+                <div>
+
+                    {% if user.is_authenticated %}
+
+                    <ul class="flex gap-4 px-4 text-gray-200 font-bold text-lg">
+                        <a class="bg-[#FC6736] text-gray-200 px-4 py-2 rounded-lg " href="{% url 'logout' %}">
+                            <li>{{user}},Logout</li>
+                        </a>
+                    </ul>
+
+                    {% else %}
+                    <ul class="flex gap-4 px-4 text-gray-200 font-bold text-lg">
+                        <a class="bg-[#FC6736] text-gray-200 px-4 py-2 rounded-lg " href="{% url 'signup' %}">
+                            <li>Login/Signup</li>
+                        </a>
+                    </ul>
+
+                    {% endif %}
+
+
+
+
+                </div>
+            </nav>
+        </div>
+        <!-- navbar ends -->
+
+
+        <div class="h-[500px] flex flex-col justify-center items-center">
+
+            <div class="w-1/2 text-center flex flex-col justify-center">
+                <p class="text-5xl font-extrabold text-gray-200">Welcome to <br> <span
+                        class="text-8xl font-extrabold text-[#FC6736]">BoardTrip</span>
+                <p class="text-4xl font-bold text-gray-200 py-2">Your one way to all your </p>
+                <p class="text-4xl font-bold leading-tight text-gray-200 px-10">destinations.</p>
+            </div>
+            <div class="pt-8">
+                <a href="{% url 'flight_detail_page' %}"
+                    class="bg-[#FC6736] text-gray-200 px-6 py-4 font-semibold text-xl rounded-lg">Book Flights</a>
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+</body>
+
+</html>

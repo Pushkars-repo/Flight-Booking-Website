@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardTrip</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    .scrollbar-one::-webkit-scrollbar {
+    display: none;
+}
+</style>
+<body>
+    <div class="w-full h-screen" style="background-image:linear-gradient(rgba(7, 7, 7, 0.775), rgba(7, 7, 7, 0.775)), url(/static/images/bg.jpg)">
+        <!-- navbar starts -->
+        <div class="px-8"> 
+            <nav class=" w-full h-20 rounded-lg flex justify-between items-center">
+                <a href="" class="text-gray-200 font-extrabold text-4xl px-4">BoardTrip</a>
+                <div>
+
+                    {% if user.is_authenticated %}
+                
+                    <ul class="flex gap-4 px-4 text-gray-200 font-bold text-lg">
+                        <a class="bg-[#FC6736] text-gray-200 px-4 py-2 rounded-lg " href="{% url 'logout' %}"><li>{{user}},Logout</li></a>
+                    </ul>
+                
+                    {% else %}
+                        <ul class="flex gap-4 px-4 text-gray-200 font-bold text-lg">
+                            <a class="bg-[#FC6736] text-gray-200 px-4 py-2 rounded-lg " href="{% url 'signup' %}"><li>Login/Signup</li></a>
+                        </ul>
+                        
+                    {% endif %}
+
+                </div>
+            </nav>
+        </div>
+        <!-- navbar ends -->
+
+        
+        <div class="flex py-6 justify-between px-6">
+        
+            <div class="h-[550px] flex justify-center items-center">
+
+                <div class="w-[380px] h-auto bg-white rounded-lg flex justify-center gap-2 flex-wrap py-4">
+                    <!-- <p class="text-[#FC6736] font-bold text-3xl py-2 border-b-4 border-[#FC6736]">Search for a flight</p> -->
+                    <form method="post" action="{% url 'search_flight_details' %}" class="flex flex-col items-start py-2">
+                        {% csrf_token %}
+                        
+
+                        <div class="flex flex-col gap-1 py-2">
+
+                            <div>
+                                <label for="flight-from" class="text-[#FC6736] font-normal">From:</label><br>
+                                <div>
+                                    <select name="origin" class="py-2 pl-2 pr-3 w-72  border-2 border-gray-500 focus:outline-none text-md font-normal rounded-lg"" required>
+                                        <option selected disabled>Select Origin</option>
+                                        {% for flight in flights %}
+                                        <option value="{{flight.origin}}">{{flight.origin}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>                                 
+                            </div>
+                    
+                            <div>
+                                <label for="flight-to" class="text-[#FC6736] font-normal">To:</label><br>
+                                <div>
+                                    <select name="destination" class="py-2 pl-2 pr-3 w-72  border-2 border-gray-500 focus:outline-none text-md font-normal rounded-lg"" required>
+                                        <option selected disabled>Select Destination</option>
+                                        {% for flight in flights %}
+                                        <option value="{{flight.destination}}">{{flight.destination}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>                       
+                            </div>
+
+
+                        </div>
+
+                        <div class="flex flex-col gap-1 py-1 items-center">
+                            <div>
+                                <label for="depart_date"  class="text-[#FC6736] font-normal">Departure Date:</label> <br>
+                                <input type="date" size="30" name="DepartDate" id="depart_date"  class="py-2 px-5 rounded-md border-2 border-gray-500">  
+                            </div>
+                            <div>
+                                <label for="return_date"  class="text-[#FC6736] font-normal">Return Date:</label><br>
+                                <input type="date" size="30" name="ReturnDate" id="return_date"  class="py-2 px-5 rounded-md border-2 border-gray-500">  
+                            </div>
+                        </div>
+
+                        <div class="py-2">
+                            <button class="bg-[#FC6736] text-gray-200 px-4 py-2 tracking-wide rounded-lg text-lg font-bold border-2">Search Flight</button>
+                        </div>
+                        {% if error_message %}
+                            {{error_message}}
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+            <div class="scrollbar-one bg-white w-[900px] h-[550px] overflow-y-scroll">
+                <div class='w-full'>
+                   
+                    
+                    <table class='mx-auto max-w-4xl w-full text-center  whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                        <thead class="bg-[#FC6736]">
+                            <tr class="text-white self-center">
+                                <th class="font-semibold text-lg uppercase px-6 py-4">Flights</th>
+                                <th class="font-semibold text-lg uppercase px-6 py-4"> Departure </th>
+                                <th class="font-semibold text-lg uppercase px-6 py-4 text-center"> Arrival </th>
+                                <th class="font-semibold text-lg uppercase px-6 py-4 text-center"> Status </th>
+                                <!-- <th class="font-semibold text-lg uppercase px-6 py-4"></th> -->
+                            </tr>
+                        </thead>
+                        {% if origin %}     
+                            
+                            <tbody class="divide-y divide-gray-200">
+                                
+                                {% for flight in flights %}
+                                <tr>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="inline-flex w-10 h-10"> <img class='w-10 h-10 object-cover rounded-full' alt='User avatar' src="{{flight.airline_logo}}"/> </div>
+                                            <div>
+                                                <p>{{flight.airline}}</p>
+                                                <p class="text-gray-500 text-sm font-semibold tracking-wide">{{flight.plane}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div>
+                                                <p>{{flight.origin}}</p>
+                                                <p class="text-gray-500 text-sm font-semibold tracking-wide">{{flight.depart_time}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div>
+                                                <p>{{flight.destination}}</p>
+                                                <p class="text-gray-500 text-sm font-semibold tracking-wide">{{flight.arrival_time}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                                                                
+                                    <td class="px-6 py-4 text-center"> <span class="text-white text-sm w-1/3 pb-1 bg-green-600 font-semibold px-2 rounded-full"> On Time </span> </td>
+                                    <td><input type="hidden" name="prod_id" value="{{flight.id}}"></td>
+                                    <td class="px-6 py-4 text-center"> <a href="{% url 'book_ticket' flight.id %}" class="bg-[#FC6736] text-gray-200 px-4 py-2 rounded-lg">Book</a> </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+                            {% endif %}                                                                                             
+                        </table>
+                    </div>
+    
+</body>
+</html>

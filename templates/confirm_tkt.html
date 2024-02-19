@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+    <div class="w-full h-screen flex justify-center items-center">
+    
+    <div class="max-w-xl h-60 p-6 bg-white  border border-gray-200 rounded-lg shadow border-gray-200 dark:border-gray-700">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-orange-400">Your E-ticket</h5>
+        </a>    
+        <p class="text-orange-400  bg-gray-200 px-3 rounded-lg py-1 font-semibold text-lg">Name: {{fname}} {{lname}}</p>
+        <p >Email: {{email}}</p>
+        <p>Phone: {{phone}}</p>
+        <p>Airline: {{booked_flight.airline}}</p>
+        <p>Origin: {{booked_flight.origin}}, Depart at: {{booked_flight.depart_time}}</p>
+        <p>Destination: {{booked_flight.destination}}, Arrive at: {{booked_flight.arrival_time}}</p>
+
+    </div>
+</div>
+</body>
+</html>
+
+
